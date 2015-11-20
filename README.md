@@ -4,6 +4,7 @@
 ActiveSupportっぽく使えるものにする(BankとかBranchとか)
 
 ポイント
+
 1 誰のために作るのか (gemを使う人が使いやすいインターフェースを目指す)
 
 2 documentationが必要
