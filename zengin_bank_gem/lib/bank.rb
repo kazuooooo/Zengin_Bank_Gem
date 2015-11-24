@@ -1,5 +1,5 @@
-require 'branch'
-require 'scraper'
+require_relative 'branch'
+require_relative 'scraper'
 # 銀行クラス
 class Bank
 
@@ -28,6 +28,9 @@ class Bank
 
     # fail
     # 10
+    scraper = Scraper.new
+    branches = scraper.test_process('ま', 'と')
+    branches.to_enum
   end
 
 end

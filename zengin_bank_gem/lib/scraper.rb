@@ -2,22 +2,61 @@ require 'rubygems'
 require 'nokogiri'
 require 'mechanize'
 require 'pry'
+require_relative 'bank'
+# require './branch'
 
 class Scraper
     attr_accessor :agent, :page
     def initialize
       @agent = Mechanize.new
       @page = ''
-      result = click_link('http://zengin.ajtw.net/', 'あ')
-      pp result
+    end
+    
+    def test_process(letter_first, letter_second)
+      # ホームページのリンクにアクセス
+      page = agent.get('http://zengin.ajtw.net/')
+      # きをクリック
+      page = click_link(letter_first)
+      # 一番上の支店をクリック
+      page = click_siten_link
+      # 支店検索ページのきをクリック
+      page = click_siten_kana_link(letter_second)
+      # 一覧ページをスクレイピング
+      branches = scrape_branch_list
     end
 
     private
-    def click_link(page_url, target_value)
-      page = agent.get(page_url)
-      form = agent.page.form
+    # 指定したpageのurlとvalueからボタンをクリックする
+    def click_link(target_value)
+      form = agent.page.forms[0]
       button = form.button_with(:value => target_value)
-      result = agent.submit(form, button)
+      page = agent.submit(form, button)
+    end
+
+    def click_siten_link
+      form = agent.page.forms[3]
+      button = form.button_with(:value => "支店検索")
+      page = agent.submit(form, button)
+    end
+
+    def click_siten_kana_link(target_value)
+      form = agent.page.forms[1]
+      button = form.button_with(:value => target_value)
+      page = agent.submit(form, button)
+    end
+
+    def scrape_branch_list
+      branches = []
+      tablerows = agent.page.search('table.tbl1 tr')
+      # 最初の行はshift
+      tablerows.shift
+      tablerows.each do |tr|
+        name = tr.css('td.g1:first-child').inner_text
+        code = tr.css('td.g2').inner_text
+        bank = Bank.new(code, name)
+        branches << bank
+      end
+      branches
     end
     # def click_news
     #   agent = Mechanize.new

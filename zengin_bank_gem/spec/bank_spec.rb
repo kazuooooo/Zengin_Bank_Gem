@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'bank'
+require_relative '../lib/bank.rb'
 
 RSpec.describe Bank do
   it 'return Enumerator' do
