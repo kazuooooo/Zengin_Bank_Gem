@@ -4,7 +4,7 @@ module Zengin
   include Enumerable
 
   def each
-    @zengin.each do |bank|
+    Zengin.banks.each do |bank|
       yield bank
     end
   end
@@ -14,8 +14,7 @@ module Zengin
   end
 end
 
-
-Zengin.banks.each do |bank|
-  bank.branches.each do |branch|
-  end
-end
+# Zengin.banks.each do |bank|
+#   bank.branches.each do |branch|
+#   end
+# end
