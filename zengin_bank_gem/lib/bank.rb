@@ -1,3 +1,4 @@
+require 'branch'
 # 銀行クラス
 class Bank
 
@@ -17,6 +18,15 @@ class Bank
 
   # @return[Enumerator] 支店
   def branches
+    # success
+    # @bank = [
+    #   Branch.new( 1,"b1" ),
+    #   Branch.new( 2,"b2" ),
+    #   Branch.new( 3,"b1" )
+    # ].to_enum
+
+    # fail
+    # 10
   end
 
 end
