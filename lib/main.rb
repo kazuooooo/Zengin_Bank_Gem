@@ -4,8 +4,11 @@ require 'nkf'
 require_relative './scraper'
 require_relative './zengin_bank_gem'
 
-class Dummy
-  include Zengin
-end
+# class Dummy
+#   include Zengin
+# end
 
-Dummy.new.banks
+# Dummy.new.banks
+
+sc = Scraper.new
+sc.test_process("き")

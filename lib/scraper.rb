@@ -11,6 +11,7 @@ class Scraper
       @page = ''
     end
     
+    # 全ての銀行一覧を取得
     def get_all_banks
       kanas = get_all_kanas
       banks = []
@@ -20,10 +21,7 @@ class Scraper
       banks
     end
 
-    def get_all_kanas
-      ("ｱ".."ﾝ").to_a.map{ |chr| NKF.nkf("-h1w", NKF.nkf("-Xw", chr)) }
-    end
-
+    # 指定したかなの銀行一覧を取得
     def get_banks_by_letter(letter_first)
       # ホームページのリンクにアクセス
       page = agent.get('http://zengin.ajtw.net/')
@@ -33,6 +31,7 @@ class Scraper
       banks = scrape_bank_list
     end
 
+    # ページから銀行一覧をスクレイピング
     def scrape_bank_list
       banks = []
       tablerows = agent.page.search('table.tbl1 tr')
@@ -47,17 +46,50 @@ class Scraper
       banks
     end
 
-    def test_process(letter_first, letter_second)
+    # 支店一覧ページから全ての支店を取得
+    def get_all_branches
+      # ホームページのリンクにアクセス
+      page = agent.get('http://zengin.ajtw.net/')
+      # きをクリック
+      page = click_link("き")
+      kanas = get_all_kanas
+      branches = []
+      kanas.each do |letter|
+        branches << get_branches_by_letter(letter)
+      end
+      pp branches
+      branches
+    end
+
+    def get_branches_by_letter(letter)
+      cached_page = click_siten_kana_link(letter)
+      branches = scrape_branch_list
+    end
+
+    def scrape_branch_list(page)
+      branches = []
+      tablerows = page.search('table.tbl1 tr')
+      # 最初の行はshift
+      tablerows.shift
+      tablerows.each do |tr|
+        name = tr.css('td.g1:first-child').inner_text
+        code = tr.css('td.g2').inner_text
+        branch = Bank.new(code, name)
+        branches << branch
+      end
+      p branches
+      branches
+    end
+
+    def test_process(letter_first)
       # ホームページのリンクにアクセス
       page = agent.get('http://zengin.ajtw.net/')
       # きをクリック
       page = click_link(letter_first)
       # 一番上の支店をクリック
       page = click_siten_link
-      # 支店検索ページのきをクリック
-      page = click_siten_kana_link(letter_second)
-      # 一覧ページをスクレイピング
-      branches = scrape_branch_list
+      # 全ての支店を取得
+      branches = get_all_branches
     end
 
     private
@@ -80,17 +112,9 @@ class Scraper
       page = agent.submit(form, button)
     end
 
-    def scrape_branch_list
-      branches = []
-      tablerows = agent.page.search('table.tbl1 tr')
-      # 最初の行はshift
-      tablerows.shift
-      tablerows.each do |tr|
-        name = tr.css('td.g1:first-child').inner_text
-        code = tr.css('td.g2').inner_text
-        bank = Bank.new(code, name)
-        branches << bank
-      end
-      branches
+    # あ〜んまでのかなを取得
+    def get_all_kanas
+      ("ｱ".."ﾝ").to_a.map{ |chr| NKF.nkf("-h1w", NKF.nkf("-Xw", chr)) }
     end
+
 end
