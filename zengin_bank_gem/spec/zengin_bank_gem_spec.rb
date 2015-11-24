@@ -1,11 +1,10 @@
-require 'spec_helper'
+# require 'spec_helper'
 
-describe ZenginBankGem do
-  it 'has a version number' do
-    expect(ZenginBankGem::VERSION).not_to be nil
-  end
-
-  it 'does something useful' do
-    expect(false).to eq(true)
-  end
-end
+# RSpec.describe Zengin do
+#   describe Bank do
+#     it 'return Enumerator' do
+#       bank = Bank.new(1, "testbank")
+#       expect(bank.branches).be_kind_of(Int)
+#     end
+#   end
+# end
