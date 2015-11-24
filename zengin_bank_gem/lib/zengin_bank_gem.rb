@@ -1,4 +1,4 @@
-require "zengin_bank_gem/version"
+require_relative "./zengin_bank_gem/version"
 
 module Zengin
   include Enumerable
@@ -20,6 +20,8 @@ module Zengin
 
     # fail
     # 10
+    scraper = Scraper.new
+    banks = scraper.get_banks("き").to_enum
   end
 end
 

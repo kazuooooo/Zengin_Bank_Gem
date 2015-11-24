@@ -3,7 +3,6 @@ require 'nokogiri'
 require 'mechanize'
 require 'pry'
 require_relative 'bank'
-# require './branch'
 
 class Scraper
     attr_accessor :agent, :page
@@ -12,6 +11,29 @@ class Scraper
       @page = ''
     end
     
+    def get_banks(letter_first)
+      # ホームページのリンクにアクセス
+      page = agent.get('http://zengin.ajtw.net/')
+      # letter_firstをクリック
+      page = click_link(letter_first)
+      # bankを取得してbanksに代入
+      banks = scrape_bank_list
+    end
+
+    def scrape_bank_list
+      banks = []
+      tablerows = agent.page.search('table.tbl1 tr')
+      # 最初の行はshift
+      tablerows.shift
+      tablerows.each do |tr|
+        name = tr.css('td.g1:first-child').inner_text
+        code = tr.css('td.g2').inner_text
+        bank = Bank.new(code, name)
+        banks << bank
+      end
+      banks
+    end
+
     def test_process(letter_first, letter_second)
       # ホームページのリンクにアクセス
       page = agent.get('http://zengin.ajtw.net/')
