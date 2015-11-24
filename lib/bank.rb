@@ -28,9 +28,9 @@ class Bank
 
     # fail
     # 10
-    scraper = Scraper.new
-    branches = scraper.test_process('ま', 'と')
-    branches.to_enum
+    # scraper = Scraper.new
+    # branches = scraper.test_process('ま', 'と')
+    # branches.to_enum
   end
 
 end
