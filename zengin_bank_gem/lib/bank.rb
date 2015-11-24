@@ -1,4 +1,5 @@
 require 'branch'
+require 'scraper'
 # 銀行クラス
 class Bank
 
