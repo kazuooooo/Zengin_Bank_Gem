@@ -11,7 +11,20 @@ class Scraper
       @page = ''
     end
     
-    def get_banks(letter_first)
+    def get_all_banks
+      kanas = get_all_kanas
+      banks = []
+      kanas.each do |letter|
+        banks << get_banks_by_letter(letter)
+      end
+      banks
+    end
+
+    def get_all_kanas
+      ("ｱ".."ﾝ").to_a.map{ |chr| NKF.nkf("-h1w", NKF.nkf("-Xw", chr)) }
+    end
+
+    def get_banks_by_letter(letter_first)
       # ホームページのリンクにアクセス
       page = agent.get('http://zengin.ajtw.net/')
       # letter_firstをクリック
@@ -80,29 +93,4 @@ class Scraper
       end
       branches
     end
-    # def click_news
-    #   agent = Mechanize.new
-    #   page = agent.get('http://google.com/')
-    #   # page内のリンクから特定のリンクをクリック
-    #   # page = agent.page.links.find { |l| l.text == 'ニュース' }.click
-    #     # ↑ の省略形で書けるメソッド
-    #     page = agent.page.link_with(:text => 'ニュース').click
-    #     # ニュースの２番目のリンクをクリック
-    #     # agent.page.links_with(:text => 'News')[1].click
-    #     # hrefなどの複数条件をつけることも可能
-    #     # page.link_with(:text => 'News', :href => '/something')
-    #   pp page
-    # end
-
-    # def input_text_to_form
-    #   agent = Mechanize.new
-    #   page = agent.get('http://google.com/')
-
-    #   # formを取得
-    #   google_form = page.form('f')
-    #   google_form.q = 'ruby mechanize'
-    #   page = agent.submit(google_form, google_form.buttons.first)
-    #   pp page
-    # end
-
 end

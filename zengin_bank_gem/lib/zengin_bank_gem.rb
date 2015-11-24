@@ -21,7 +21,7 @@ module Zengin
     # fail
     # 10
     scraper = Scraper.new
-    banks = scraper.get_banks("き").to_enum
+    banks = scraper.get_all_banks.to_enum
   end
 end
 
