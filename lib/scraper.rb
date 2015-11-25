@@ -65,10 +65,6 @@ class Scraper
     siten_list_pages = get_branch_list_pages
     # #各支店一覧ページから支店を取得
     branches = get_all_branches_from_list_pages(siten_list_pages)
-    branches.flatten.each do |branch|
-      puts branch.name
-      puts branch.code
-    end
     branches.flatten
   end
 
