@@ -4,8 +4,8 @@ require_relative '../lib/main.rb'
 
 
 RSpec.describe Zengin do
-  let(:dummy_class) { Dummy.new }
-  it 'banks return Enumerator' do
-    expect(dummy_class.banks).to be_kind_of(Enumerator)
-  end
+  # let(:dummy_class) { Dummy.new }
+  # it 'banks return Enumerator' do
+  #   expect(dummy_class.banks).to be_kind_of(Enumerator)
+  # end
 end
