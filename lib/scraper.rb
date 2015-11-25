@@ -3,15 +3,18 @@ require 'nokogiri'
 require 'mechanize'
 require 'pry'
 require_relative 'bank'
-
+# [SHOULD] メソッドの本体コードにコメントを書かなければ理解できないようなコードを書いてはならない。
+# メソッド本体内にコメントを書くよりも、別のメソッドに分けて適切な名前を付ける方が可読性が向上する。
+# ただし、数式に対する補足や出展などはコード本体中にコメントとして書いても良い
 class Scraper
   attr_accessor :agent, :kanas
+
   def initialize
     @agent = Mechanize.new
-    @page = agent.get('http://zengin.ajtw.net/')
     @kanas = get_all_kanas
     agent.keep_alive = false
   end
+
 ### Bank関連
   # 全ての銀行一覧を取得
   def get_all_banks
@@ -24,9 +27,7 @@ class Scraper
 
   # 指定したかなの銀行一覧を取得
   def get_banks_by_letter(kana)
-    # letter_firstをクリック
     click_link(kana)
-    # bankを取得してbanksに代入
     banks = scrape_bank_list
     go_back_page
     banks
@@ -43,11 +44,9 @@ class Scraper
   def scrape_bank_list
     banks = []
     tablerows = agent.page.search('table.tbl1 tr')
-    # 最初の行はshift
     tablerows.shift
     tablerows.each do |tr|
       name = tr.css('td.g1:first-child').inner_text
-      #データがない場合はスキップ
       if name == "該当するデータはありません"
         next
       end
@@ -62,21 +61,16 @@ class Scraper
 ### Branch関連
   def get_all_branches(bank_code)
     search_bank(bank_code)
-    # 支店ホームページのあ〜A-Zをクリックした一覧ページを全て取得
     siten_list_pages = get_branch_list_pages
-    # #各支店一覧ページから支店を取得
     branches = get_all_branches_from_list_pages(siten_list_pages)
     branches.flatten
   end
 
   def search_bank(bank_code)
-    # コードから検索にアクセス
     agent.page.link_with( :text => "コードから検索<入力形式>" ).click
-    # 金融機関コードにbank_codeを代入して検索
     form = agent.page.forms[0]
     form.inbc = bank_code
     agent.submit(form)
-    # 支店検索をクリック
     form = agent.page.forms[1]
     agent.submit(form)
   end
@@ -97,7 +91,6 @@ class Scraper
       kana_branches = get_branches_from_list(list_page)
       branches << kana_branches
     end
-    # 空配列削除
     branches.delete([])
     branches
   end
@@ -105,11 +98,9 @@ class Scraper
   def get_branches_from_list(branch_list_page)
     branches = []
     tablerows = branch_list_page.search('table.tbl1 tr')
-    # 最初の行はshift
     tablerows.shift
     tablerows.each do |tr|
       name = tr.css('td.g1:first-child').inner_text
-      #データがない場合はスキップ
       if name == "該当するデータはありません"
         next
       end
@@ -124,11 +115,9 @@ class Scraper
     kana_form = agent.page.forms[1]
     button = kana_form.button_with(:value => kana)
     list_page = agent.submit(kana_form, button)
-    #ページを取得したら前ページに戻る
     back_form = agent.page.forms[0]
     back_button = back_form.button_with(:value => "前ページに戻る")
     agent.submit(back_form, back_button)
-
     list_page
   end
 ##
@@ -143,10 +132,11 @@ class Scraper
   def display_page_info(list_page)
     info = list_page.search('span.f76')
   end
-      # あ〜んまでのかなを取得
+  # あ〜A-Zまでのかなを取得
   def get_all_kanas
-    kanas = ("ｱ".."ﾜ").to_a.map{ |chr| NKF.nkf("-h1w", NKF.nkf("-Xw", chr)) }
+    kanas = (*"ｱ".."ﾜ").map{ |chr| NKF.nkf("-h1w", NKF.nkf("-Xw", chr)) }
     kanas << "A-Z"
   end
 ##
+
 end

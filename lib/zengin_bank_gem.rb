@@ -1,5 +1,6 @@
 require_relative "./zengin_bank_gem/version"
 require_relative "scraper.rb"
+
 module Zengin
   include Enumerable
 
@@ -14,4 +15,5 @@ module Zengin
     scraper = Scraper.new
     banks = scraper.get_all_banks.to_enum
   end
+
 end
