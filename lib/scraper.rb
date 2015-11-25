@@ -171,6 +171,12 @@ class Scraper
     # あ〜んまでのかなを取得
     def get_all_kanas
       kanas = ("ｱ".."ﾜ").to_a.map{ |chr| NKF.nkf("-h1w", NKF.nkf("-Xw", chr)) }
+      kanas << "A-Z"
+      kanas.each do |kana|
+        p kana
+      end
+      p kanas.length
+      kanas
     end
 
 end
