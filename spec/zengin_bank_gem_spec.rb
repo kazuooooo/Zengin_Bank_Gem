@@ -31,4 +31,21 @@ RSpec.describe Zengin do
       expect(test_class.banks.to_a.uniq.length).to eq(test_class.banks.to_a.length)
     end
   end
+  
+  describe "#put all" do
+    let(:test_class) { TestClass.new }
+    it "test put" do
+      banks = test_class.banks
+      banks.each do |bank|
+        puts "銀行名" << bank.name
+        puts "金融機関コード" << bank.code
+        branches = bank.branches
+        # branches.each do |branch|
+        #   puts branch.name
+        #   puts branch.code
+        # end
+      end
+      puts "FINISH ALL!!!"
+    end
+  end
 end

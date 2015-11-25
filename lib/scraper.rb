@@ -10,6 +10,7 @@ class Scraper
     @agent = Mechanize.new
     @page = agent.get('http://zengin.ajtw.net/')
     @kanas = get_all_kanas
+    agent.keep_alive = false
   end
 ### Bank関連
   # 全ての銀行一覧を取得
