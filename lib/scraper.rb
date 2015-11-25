@@ -5,12 +5,11 @@ require 'pry'
 require_relative 'bank'
 
 class Scraper
-  attr_accessor :agent, :home_page, :kanas
+  attr_accessor :agent, :kanas
   def initialize
     @agent = Mechanize.new
-    @page = ''
+    @page = agent.get('http://zengin.ajtw.net/')
     @kanas = get_all_kanas
-    @home_page = agent.get('http://zengin.ajtw.net/')
   end
 ### Bank関連
   # 全ての銀行一覧を取得
@@ -25,15 +24,17 @@ class Scraper
   # 指定したかなの銀行一覧を取得
   def get_banks_by_letter(kana)
     # letter_firstをクリック
-    page = click_link(kana)
+    click_link(kana)
     # bankを取得してbanksに代入
     banks = scrape_bank_list
+    go_back_page
+    banks
   end
 
   # 指定したpageのurlとvalueからボタンをクリックする
-  def click_link(target_value)
-    form = home_page.forms[0]
-    button = form.button_with(:value => target_value)
+  def click_link(kana)
+    form = agent.page.forms[0]
+    button = form.button_with(:value => kana)
     page = agent.submit(form, button)
   end
 
@@ -45,6 +46,10 @@ class Scraper
     tablerows.shift
     tablerows.each do |tr|
       name = tr.css('td.g1:first-child').inner_text
+      #データがない場合はスキップ
+      if name == "該当するデータはありません"
+        next
+      end
       code = tr.css('td.g2').inner_text
       bank = Bank.new(code, name)
       banks << bank
