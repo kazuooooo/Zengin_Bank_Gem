@@ -12,33 +12,6 @@ class Scraper
     @kanas = get_all_kanas
     @home_page = agent.get('http://zengin.ajtw.net/')
   end
-
-    # 1.ホームページにアクセス(cache)
-    # 2.金融機関の最初の文字をクリック(あーん)(cache)
-    #   a. 支店検索をクリック（その仮名の銀行列分)
-    #     い. 銀行名と金融機関コードを代入 
-    #     ろ. 支店名の最初の文字をクリック(あーん)
-    #       # get_branch_list_pages
-    #       # get_all_branches_from_list_pages
-    #       1. リストの列分の支店名、支店コードを代入
-              # get_branches_from_list
-    #       2. いに戻る
-    #     は. bに戻る
-    #   b. 2.に戻る
-  def process
-    
-    # ホームページのリンクにアクセス
-    page = agent.get('http://zengin.ajtw.net/')
-
-    get_all_branches("8656")
-    # # 支店ホームページのあ〜A-Zをクリックした一覧ページを全て取得
-    # siten_list_pages = get_branch_list_pages
-
-    # #各支店一覧ページから支店を取得
-    # branches = get_all_branches_from_list_pages(siten_list_pages)
-    # p branches
-  end
-
 ### Bank関連
   # 全ての銀行一覧を取得
   def get_all_banks
