@@ -1,5 +1,6 @@
 require_relative 'branch'
-require_relative 'scraper'
+require_relative 'branch_scraper'
+
 # 銀行クラス
 class Bank
 
@@ -19,8 +20,8 @@ class Bank
 
   # @return[Enumerator] 支店
   def branches
-    scraper = Scraper.new
-    branches = scraper.get_all_branches(code)
+    branch_scraper = BranchScraper.new
+    branches = branch_scraper.get_all_branches(code)
     branches.to_enum
   end
 
