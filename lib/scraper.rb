@@ -11,6 +11,7 @@ class Scraper
 
   def initialize
     @agent = Mechanize.new
+    agent.get('http://zengin.ajtw.net/')
     @kanas = get_all_kanas
     agent.keep_alive = false
   end
@@ -134,7 +135,7 @@ class Scraper
   end
   # あ〜A-Zまでのかなを取得
   def get_all_kanas
-    kanas = (*"ｱ".."ﾜ").map{ |chr| NKF.nkf("-h1w", NKF.nkf("-Xw", chr)) }
+    kanas = [*"ｱ".."ﾜ"].map{ |chr| NKF.nkf("-h1w", NKF.nkf("-Xw", chr)) }
     kanas << "A-Z"
   end
 ##
