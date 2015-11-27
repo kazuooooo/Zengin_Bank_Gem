@@ -17,6 +17,9 @@ RSpec.describe Bank do
       it 'match the correct amount' do
         expect(bank.branches.to_a.length).to eq(109)
       end
+
+      it 'include どっかの支店名' do
+      end
     end
   end
 end

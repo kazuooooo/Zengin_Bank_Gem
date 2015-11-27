@@ -38,4 +38,13 @@ class Scraper
     kanas << "A-Z"
   end
 
+  # 指定したpageのurlとvalueからボタンをクリックする
+  # @param kana [String] "あ"〜"A-Z"までのかな
+  # @param num [Int] 銀行かな => 0 支店かな => 1 
+  # @return [Mecanize:Page] クリック後のページを返す
+  def click_kana_link(kana, num)
+    form = agent.page.forms[num]
+    button = form.button_with(:value => kana)
+    page = agent.submit(form, button)
+  end
 end
