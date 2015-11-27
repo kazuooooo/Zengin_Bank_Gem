@@ -19,10 +19,10 @@
 build/
 
 ## Documentation cache and generated files:
-/.yardoc/
-/_yardoc/
-/doc/
-/rdoc/
+/lib/.yardoc/
+/lib/_yardoc/
+/lib/doc/
+/lib/rdoc/
 
 ## Environment normalisation:
 /.bundle/
