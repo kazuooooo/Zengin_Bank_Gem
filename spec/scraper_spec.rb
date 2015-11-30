@@ -4,7 +4,7 @@ require_relative '../lib/branch_scraper.rb'
 
 RSpec.describe Scraper do
 
-  describe 'get_all_kanas' do 
+  describe '#get_all_kanas' do 
     subject(:scraper){ Scraper.new }
     
     it 'return 45 letters' do
@@ -15,6 +15,17 @@ RSpec.describe Scraper do
       expect(scraper.get_all_kanas).to include("A-Z")
     end
 
+  end
+
+  describe '#go_back_page' do
+    scraper = Scraper.new
+    agent = Mechanize.new
+    @origin_page = agent.get('http://zengin.ajtw.net/')
+    scraper.click_kana_link('あ', 0)
+    @after_back_page = scraper.go_back_page
+    it 'はじめにいたページと元に戻るを押したページが同じであること' do
+      expect(@after_back_page).to eq(@origin_page)
+    end
   end
 
   describe '#click_kana_link' do
