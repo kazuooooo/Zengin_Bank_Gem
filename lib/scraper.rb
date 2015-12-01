@@ -14,6 +14,7 @@ class Scraper
     agent.get('http://zengin.ajtw.net/')
     @kanas = get_all_kanas
     agent.keep_alive = false
+    agent.read_timeout = 180
   end
   
   # 前ページに戻るを押下
