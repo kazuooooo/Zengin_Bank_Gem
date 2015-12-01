@@ -23,7 +23,7 @@ $ gem install zengin-ruby
 ### Usage
 
 Include Zengin Module in Class.
-```
+```ruby
 class SomeClass
   include Zengin
 end
@@ -31,14 +31,14 @@ end
  
 Then you can use ClassName.banks method, it return Enumerable BankCollection object.
 Bank object has bank_code, name and yomi properties.
-```
+```ruby
 someclass.banks 
 # => Enumerable BankCollection
 ```
  
 Moreover, Bank Object has branches method, it return Enumerable BranchCollection oject.
 Branch object has branch_code, name and yomi properties.
-```
+```ruby
 somebank.branches
 # => Enumerable BranchCollection
 ```
