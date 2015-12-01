@@ -16,7 +16,7 @@ RSpec.describe Zengin do
     end
   end
 
-  describe "BankCollection" do
+  describe Zengin::BankCollection do
     describe 'ある取得した銀行の名前とコードが正しく取得出来ている' do
       context '松本信用金庫の場合' do
         it 'コードは1391になる' do
