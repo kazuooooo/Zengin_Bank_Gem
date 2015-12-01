@@ -46,7 +46,7 @@ somebank.branches
 For more detail, please check sample below.
 
 ### Sample
-```
+```ruby
 require_relative 'zengin_bank_gem'
 class Sample
   include Zengin # need to include Zengin Module
