@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
-require_relative '../lib/scraper.rb'
-require_relative '../lib/bank_scraper.rb'
+require_relative '../lib/scraper'
+require_relative '../lib/bank_scraper'
 
 RSpec.describe BankScraper do
 
@@ -29,4 +29,3 @@ RSpec.describe BankScraper do
   end
 
 end
-

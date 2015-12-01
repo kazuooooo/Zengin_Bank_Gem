@@ -1,6 +1,6 @@
 require_relative './zengin_bank_gem/version'
-require_relative 'bank_scraper.rb'
-require_relative 'bank.rb'
+require_relative 'bank_scraper'
+require_relative 'bank'
 
 module Zengin
 

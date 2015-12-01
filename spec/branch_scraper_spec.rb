@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
-require_relative '../lib/scraper.rb'
-require_relative '../lib/branch_scraper.rb'
+require_relative '../lib/scraper'
+require_relative '../lib/branch_scraper'
 
 RSpec.describe BranchScraper do
   
@@ -29,4 +29,3 @@ RSpec.describe BranchScraper do
   end
 
 end
-

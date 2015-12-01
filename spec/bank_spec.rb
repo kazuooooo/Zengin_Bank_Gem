@@ -1,5 +1,5 @@
 require_relative 'spec_helper'
-require_relative '../lib/bank.rb'
+require_relative '../lib/bank'
 
 RSpec.describe Bank do
   

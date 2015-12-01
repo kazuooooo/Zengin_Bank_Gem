@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
-require_relative '../lib/zengin_bank_gem.rb'
-require_relative '../lib/testclass.rb'
-require_relative '../lib/bank_scraper.rb'
+require_relative '../lib/zengin_bank_gem'
+require_relative 'testclass'
+require_relative '../lib/bank_scraper'
 require 'pry'
 
 RSpec.describe Zengin do

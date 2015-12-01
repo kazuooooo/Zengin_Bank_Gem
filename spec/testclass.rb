@@ -1,5 +1,5 @@
-require_relative 'zengin_bank_gem.rb'
-require_relative 'bank.rb'
+require_relative '../lib/zengin_bank_gem'
+require_relative '../lib/bank'
 
 class TestClass
   include Zengin
