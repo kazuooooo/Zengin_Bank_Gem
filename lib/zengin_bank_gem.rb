@@ -3,14 +3,6 @@ require_relative "bank_scraper.rb"
 
 module Zengin
 
-  class Bank
-    attr_accessor :bank_code, :name
-    def initialize(code, name)
-      @bank_code = code
-      @name = name
-    end
-  end
-
   class BankCollection
     include Enumerable
 
