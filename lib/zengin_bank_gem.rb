@@ -17,8 +17,9 @@ module Zengin
           if name == "該当するデータはありません"
             next
           end
+          yomi = tr.css('td.g1:nth-child(2)').inner_text
           bank_code = tr.css('td.g2').inner_text
-          bank = Bank.new(bank_code, name)
+          bank = Bank.new(bank_code, name, yomi)
           yield bank
         end
       end

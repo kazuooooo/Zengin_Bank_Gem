@@ -5,7 +5,7 @@ RSpec.describe Bank do
   
   attr_accessor :bank
   before do
-    @bank = Bank.new('0001', 'みずほ銀行')
+    @bank = Bank.new('0001', 'みずほ銀行', 'ﾐｽﾞﾎｷﾞﾝｺｳ')
   end
 
   describe '#branches' do

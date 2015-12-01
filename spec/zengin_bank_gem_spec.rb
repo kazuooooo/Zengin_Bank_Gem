@@ -20,10 +20,10 @@ RSpec.describe Zengin do
     describe 'ある取得した銀行の名前とコードが正しく取得出来ている' do
       context '松本信用金庫の場合' do
         it 'コードは1391になる' do
-            bank = test_class.banks.each.find do |bank|
-                     bank.name == '松本信用金庫'
-                   end
-            expect(bank.bank_code).to eq('1391')
+          bank = test_class.banks.each.find do |bank|
+                   bank.name == '松本信用金庫'
+                 end
+          expect(bank.bank_code).to eq('1391')
         end
       end
     end

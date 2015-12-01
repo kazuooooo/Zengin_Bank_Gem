@@ -1,18 +1,20 @@
 require_relative '../lib/branch_scraper.rb'
 class Bank
 
-  attr_accessor :bank_code, :name
+  attr_accessor :bank_code, :name, :yomi
 
-  def initialize(code, name)
+  def initialize(code, name, yomi)
     @bank_code = code
     @name = name
+    @yomi = yomi
   end
 
   class Branch
-    attr_accessor :branch_code, :name
-    def initialize(code, name)
+    attr_accessor :branch_code, :name, :yomi
+    def initialize(code, name, yomi)
       @branch_code = code
       @name = name
+      @yomi = yomi
     end
   end
 
@@ -37,8 +39,9 @@ class Bank
           if name == "該当するデータはありません"
             next
           end
+          yomi = tr.css('td.g1:nth-child(2)').inner_text
           branch_code = tr.css('td.g2').inner_text
-          branch = Branch.new(branch_code, name)
+          branch = Branch.new(branch_code, name, yomi)
           yield branch
         end
       end
