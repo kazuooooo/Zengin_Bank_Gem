@@ -37,7 +37,7 @@ class Bank
         tablerows.shift
         tablerows.each do |tr|
           name = tr.css('td.g1:first-child').inner_text
-          if name == "該当するデータはありません"
+          if name == '該当するデータはありません'
             next
           end
           yomi = tr.css('td.g1:nth-child(2)').inner_text

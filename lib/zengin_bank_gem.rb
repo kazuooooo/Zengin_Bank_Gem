@@ -1,6 +1,6 @@
-require_relative "./zengin_bank_gem/version"
-require_relative "bank_scraper.rb"
-require_relative "bank.rb"
+require_relative './zengin_bank_gem/version'
+require_relative 'bank_scraper.rb'
+require_relative 'bank.rb'
 
 module Zengin
 
@@ -15,7 +15,7 @@ module Zengin
         tablerows.shift
         tablerows.each do |tr|
           name = tr.css('td.g1:first-child').inner_text
-          if name == "該当するデータはありません"
+          if name == '該当するデータはありません'
             next
           end
           yomi = tr.css('td.g1:nth-child(2)').inner_text

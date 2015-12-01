@@ -18,7 +18,7 @@ class Scraper
   # @return [Mechanize:Page] 遷移後のページを返す
   def go_back_page
     back_form = agent.page.forms[0]
-    back_button = back_form.button_with(:value => "前ページに戻る")
+    back_button = back_form.button_with(:value => '前ページに戻る')
     agent.submit(back_form, back_button)
   end
 
@@ -29,14 +29,14 @@ class Scraper
 
   # サイトのボタンにあるあ〜A-Zまでのかなを取得
   # @param [nil]
-  # @return [String[]] "あ"〜"A-Z"を返す
+  # @return [String[]] 'あ'〜'A-Z'を返す
   def get_all_kanas
-    kanas = [*"ｱ".."ﾜ"].map{ |chr| NKF.nkf("-h1w", NKF.nkf("-Xw", chr)) }
-    kanas << "A-Z"
+    kanas = [*'ｱ'..'ﾜ'].map{ |chr| NKF.nkf('-h1w', NKF.nkf('-Xw', chr)) }
+    kanas << 'A-Z'
   end
 
   # 指定したpageのurlとvalueからボタンをクリックする
-  # @param kana [String] "あ"〜"A-Z"までのかな
+  # @param kana [String] 'あ'〜'A-Z'までのかな
   # @param num [Int] 銀行かな => 0 支店かな => 1 
   # @return [Mecanize:Page] クリック後のページを返す
   def click_kana_link(kana, num)
