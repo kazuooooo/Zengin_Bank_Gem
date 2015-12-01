@@ -4,14 +4,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'zengin_bank_gem/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "zengin_bank_gem"
+  spec.name          = "zengin_ruby_gem"
   spec.version       = ZenginBankGem::VERSION
-  spec.authors       = ["TODO: Write your name"]
-  spec.email         = ["TODO: Write your email address"]
+  spec.authors       = ["kazuya.matsumoto"]
+  spec.email         = ["matsumotokazuya7@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{zengin ruby gem}
+  spec.description   = %q{gem for using bank and branches info scraped from Zengin System(http://zengin.ajtw.net/)}
+  spec.homepage      = "https://github.com/kazuooooo/Zengin_Bank_Gem"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
