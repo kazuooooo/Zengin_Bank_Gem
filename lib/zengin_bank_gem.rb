@@ -31,4 +31,6 @@ module Zengin
     BankCollection.new
   end
 
+  module_function :banks
+
 end
