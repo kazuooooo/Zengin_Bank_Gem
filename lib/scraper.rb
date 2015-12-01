@@ -1,14 +1,10 @@
 require 'rubygems'
 require 'nokogiri'
 require 'mechanize'
-require 'pry'
-# スクレイプの基底クラス
-# [SHOULD] メソッドの本体コードにコメントを書かなければ理解できないようなコードを書いてはならない。
-# メソッド本体内にコメントを書くよりも、別のメソッドに分けて適切な名前を付ける方が可読性が向上する。
-# ただし、数式に対する補足や出展などはコード本体中にコメントとして書いても良い
-class Scraper
-  attr_accessor :agent, :kanas
 
+class Scraper
+  
+  attr_accessor :agent, :kanas
   def initialize
     @agent = Mechanize.new
     agent.get('http://zengin.ajtw.net/')
@@ -48,4 +44,5 @@ class Scraper
     button = form.button_with(:value => kana)
     page = agent.submit(form, button)
   end
+
 end

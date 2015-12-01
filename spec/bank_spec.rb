@@ -21,8 +21,8 @@ RSpec.describe Bank do
         attr_accessor :branch
         before do
           @branch = bank.branches.each.find do |branch|
-                     branch.name == '池尻大橋支店'
-                   end
+                      branch.name == '池尻大橋支店'
+                    end
         end
 
         it '支店コードは769になる' do

@@ -30,4 +30,5 @@ module Zengin
   def banks
     BankCollection.new
   end
+
 end

@@ -3,7 +3,7 @@ require_relative '../lib/scraper.rb'
 require_relative '../lib/bank_scraper.rb'
 
 RSpec.describe BankScraper do
-  
+
   attr_accessor :pages
   before do
     bank_scraper = BankScraper.new

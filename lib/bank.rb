@@ -1,8 +1,8 @@
 require_relative '../lib/branch_scraper.rb'
+
 class Bank
-
+  
   attr_accessor :bank_code, :name, :yomi
-
   def initialize(code, name, yomi)
     @bank_code = code
     @name = name
@@ -10,19 +10,20 @@ class Bank
   end
 
   class Branch
+    
     attr_accessor :branch_code, :name, :yomi
     def initialize(code, name, yomi)
       @branch_code = code
       @name = name
       @yomi = yomi
     end
+
   end
 
   class BranchCollection
     include Enumerable
 
     attr_accessor :bank_code
-
     def initialize(code)
       @bank_code = code
     end
