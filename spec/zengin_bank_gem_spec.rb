@@ -34,8 +34,8 @@ RSpec.describe Zengin do
         attr_accessor :no_banks
         before do
           @no_banks = banks.each.find_all do |bank|
-                       bank.yomi[0, 1] == 'ﾉ'
-                     end
+                        bank.yomi[0, 1] == 'ﾉ'
+                      end
         end
 
         it '9つの金融機関がある' do
