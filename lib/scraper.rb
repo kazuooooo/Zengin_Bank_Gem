@@ -1,7 +1,3 @@
-require 'rubygems'
-require 'nokogiri'
-require 'mechanize'
-
 class Scraper
   
   attr_accessor :agent, :kanas

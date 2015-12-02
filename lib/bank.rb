@@ -1,5 +1,3 @@
-require_relative '../lib/branch_scraper.rb'
-
 class Bank
   
   attr_accessor :bank_code, :name, :yomi

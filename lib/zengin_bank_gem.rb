@@ -1,6 +1,11 @@
-require_relative './zengin_bank_gem/version'
-require_relative 'bank_scraper'
-require_relative 'bank'
+require 'rubygems'
+require 'nokogiri'
+require 'mechanize'
+require 'scraper'
+require 'zengin_bank_gem/version.rb'
+require 'bank_scraper'
+require 'bank'
+require 'branch_scraper.rb'
 
 module Zengin
 

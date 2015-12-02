@@ -1,6 +1,4 @@
-require_relative 'spec_helper'
-require_relative '../lib/scraper'
-require_relative '../lib/bank_scraper'
+require 'spec_helper'
 
 RSpec.describe BankScraper do
 
