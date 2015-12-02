@@ -1,8 +1,5 @@
-require_relative 'spec_helper'
-require_relative '../lib/zengin_bank_gem'
-require_relative 'testclass'
-require_relative '../lib/bank_scraper'
-require 'pry'
+require 'spec_helper'
+require_relative './testclass'
 
 RSpec.describe Zengin do
   attr_accessor :test_class, :banks
