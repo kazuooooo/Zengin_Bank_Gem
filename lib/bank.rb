@@ -31,13 +31,11 @@ class Bank
       branch_scraper = BranchScraper.new
       branch_scraper.search_bank(bank_code)
       branch_scraper.get_branch_list_pages.each do |page|
+        next if no_branch?(page)
         tablerows = page.search('table.tbl1 tr')
         tablerows.shift
         tablerows.each do |tr|
           name = tr.css('td.g1:first-child').inner_text
-          if name == '該当するデータはありません'
-            next
-          end
           yomi = tr.css('td.g1:nth-child(2)').inner_text
           branch_code = tr.css('td.g2').inner_text
           branch = Branch.new(branch_code, name, yomi)
@@ -45,6 +43,12 @@ class Bank
         end
       end
     end
+    
+    def no_branch?(page)
+      text = page.search('table.tbl1 tr td.g1:first-child').inner_text
+      text == '該当するデータはありません'
+    end
+
   end
 
   def branches

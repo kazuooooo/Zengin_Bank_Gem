@@ -4,6 +4,7 @@ class Scraper
   def initialize
     @agent = Mechanize.new
     agent.get('http://zengin.ajtw.net/')
+    agent.log = Logger.new $stderr
     @kanas = get_all_kanas
     agent.keep_alive = false
     agent.read_timeout = 180
@@ -15,6 +16,7 @@ class Scraper
   def go_back_page
     back_form = agent.page.forms[0]
     back_button = back_form.button_with(:value => '前ページに戻る')
+    p "go back page"
     agent.submit(back_form, back_button)
   end
 
@@ -38,6 +40,7 @@ class Scraper
   def click_kana_link(kana, num)
     form = agent.page.forms[num]
     button = form.button_with(:value => kana)
+    p "click" << kana
     page = agent.submit(form, button)
   end
 
