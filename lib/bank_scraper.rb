@@ -1,6 +1,3 @@
-require_relative 'scraper'
-require_relative 'zengin_bank_gem'
-
 class BankScraper < Scraper
   
   def get_banks_list_pages
