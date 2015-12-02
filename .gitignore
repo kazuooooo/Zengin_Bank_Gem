@@ -66,6 +66,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# vrc
+/spec/cassettes
 
 ### Linux ###
 *~
