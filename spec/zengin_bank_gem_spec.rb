@@ -1,16 +1,16 @@
-require 'spec_helper'
-require_relative './testclass'
+require 'vcr'
+require_relative './spec_helper'
 
-RSpec.describe Zengin do
-  attr_accessor :test_class, :banks
+
+RSpec.describe Zengin, vcr: { cassette_name: 'zengin_spec' } do
+  attr_accessor :banks
   before do
-    @test_class = TestClass.new
-    @banks = test_class.banks
+    @banks = Zengin.banks
   end
 
   describe '#banks' do
     it 'banksを呼んだ時にBankCollectionが返る' do
-      expect(test_class.banks).to be_kind_of(Zengin::BankCollection)
+      expect(Zengin.banks).to be_kind_of(Zengin::BankCollection)
     end
   end
 
@@ -49,5 +49,16 @@ RSpec.describe Zengin do
 
       end
     end
+
+    # describe '全件出力できるかのテスト' do
+    #   it '全件出力' do
+    #     Zengin.banks.each do |bank|
+    #       p bank.name
+    #         bank.branches.each do |branch|
+    #           p branch.name
+    #         end
+    #     end
+    #   end
+    # end
   end
 end
