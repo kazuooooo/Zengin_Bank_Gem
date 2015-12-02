@@ -1,5 +1,3 @@
-require_relative 'scraper'
-
 class BranchScraper < Scraper
 
   def search_bank(bank_code)
