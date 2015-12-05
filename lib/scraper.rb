@@ -1,8 +1,12 @@
+require 'singleton'
+
 class Scraper
-  
+  include Singleton
+
   attr_accessor :agent, :bank_kana_page, :banks_list_pages
   def initialize
     @agent = Mechanize.new
+    p "call scraper initialize"
     @bank_kana_page = agent.get('http://zengin.ajtw.net/')
     @banks_list_pages = []
     @branch_kana_pages = []
@@ -17,7 +21,8 @@ class Scraper
     bank_form.buttons.each do |initial_kana_button|
       banks_list_pages << begin
                             bank_form.click_button(initial_kana_button)
-                          rescue
+                          rescue Exception => e
+                            p "retrying..."
                             retry
                           end
     end
@@ -38,12 +43,12 @@ class Scraper
     branch_pages = []
     branch_form = branch_kana_page.form_with(action: /shitenmeisai.php/)
     branch_form.buttons.each do |initial_kana_button|
-      branch_pages << branch_form.click_button(initial_kana_button)
-      # begin
-      #                 branch_form.click_button(initial_kana_button)
-      #               rescue Exception => e
-      #                 retry
-      #               end
+      branch_pages << begin
+                        branch_form.click_button(initial_kana_button)
+                      rescue Exception => e
+                        p "retrying..."
+                        retry
+                      end
     end
     branch_pages
   end

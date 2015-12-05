@@ -6,6 +6,7 @@ require 'scraper'
 require 'bank_scraper'
 require 'bank'
 require 'branch_scraper.rb'
+require 'csv'
 
 module Zengin
 
@@ -14,7 +15,7 @@ module Zengin
 
     attr_accessor :bank_scraper
     def initialize
-      @bank_scraper = Scraper.new
+      @bank_scraper = Scraper.instance
     end
 
     def each
@@ -41,5 +42,22 @@ module Zengin
   end
 
   module_function :banks
+
+  def mk_csv_file
+    banks.each do |bank|
+      bank.branches.each do |branch|
+        CSV.open("zengin_test.csv", "w") do |csv|
+          csv << CSV.generate_line([
+                                  branch.bank_name,
+                                  bank.yomi,
+                                  branch.bank_code,
+                                  branch.branch_name,
+                                  branch.yomi,
+                                  branch.branch_code,
+                                  ])
+        end
+      end
+    end
+  end
 
 end

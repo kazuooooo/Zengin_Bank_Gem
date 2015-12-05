@@ -29,7 +29,7 @@ class Bank
       @bank_code = bank_code
       @bank_name = bank_name
       @branch_kana_page = branch_kana_page
-      @scraper = Scraper.new
+      @scraper = Scraper.instance
     end
 
     def each

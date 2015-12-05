@@ -35,6 +35,15 @@ RSpec.describe Zengin, vcr: { cassette_name: 'zengin_spec', :record => :new_epis
           end
         end
     end
+
+    it 'put all banks and branches' do
+      banks.each do |bank|
+        p "銀行：" << bank.name
+          bank.branches.each do |branch|
+            p branch.name
+          end
+      end
+    end
   end
 
   # describe '#banks' do
