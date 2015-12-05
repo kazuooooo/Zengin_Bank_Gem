@@ -1,11 +1,15 @@
+require 'vcr'
 require_relative 'spec_helper'
 require_relative '../lib/bank'
 
-RSpec.describe Bank do
+RSpec.describe Bank, vcr: { cassette_name: 'bank_spec', :record => :new_episodes } do
   
   attr_accessor :bank
   before do
-    @bank = Bank.new('0001', 'みずほ銀行', 'ﾐｽﾞﾎｷﾞﾝｺｳ')
+    @bank = Zengin.banks.find do |bank|
+              bank.name == "アイオー信用金庫"
+            end
+    binding.pry
   end
 
   describe '#branches' do

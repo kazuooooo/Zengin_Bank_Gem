@@ -1,8 +1,8 @@
 require 'rubygems'
 require 'nokogiri'
 require 'mechanize'
+require 'pry'
 require 'scraper'
-require 'zengin_bank_gem/version.rb'
 require 'bank_scraper'
 require 'bank'
 require 'branch_scraper.rb'
@@ -12,26 +12,26 @@ module Zengin
   class BankCollection
     include Enumerable
 
+    attr_accessor :bank_scraper
+    def initialize
+      @bank_scraper = Scraper.new
+    end
+
     def each
       return self unless block_given?
-      bank_scraper = BankScraper.new
       bank_scraper.get_banks_list_pages.each do |page|
-        next if no_bank?(page)
-        tablerows = page.search('table.tbl1 tr')
-        tablerows.shift
-        tablerows.each do |tr|
-          name = tr.css('td.g1:first-child').inner_text
-          yomi = tr.css('td.g1:nth-child(2)').inner_text
-          bank_code = tr.css('td.g2').inner_text
-          bank = Bank.new(bank_code, name, yomi)
+        name, yomi, code = '', '', ''
+        page_html = Nokogiri::HTML(page.body)
+        page_html.css('table.tbl1 tr:not(:first-child)').each_with_index do |tr, index|
+          name, yomi, code = tr.css('td.g1, td.g2').map{ |td| td.text }
+          next unless name && yomi && code
+          # 支店の一覧ページを保存しておく
+          branch_form = page.forms_with(action: /shiten.php/)
+          branch_kana_page = branch_form[index].submit
+          bank = Bank.new(code, name, yomi, branch_kana_page)
           yield bank
         end
       end
-    end
-
-    def no_bank?(page)
-      text = page.search('table.tbl1 tr td.g1:first-child').inner_text
-      text == '該当するデータはありません'
     end
 
   end
