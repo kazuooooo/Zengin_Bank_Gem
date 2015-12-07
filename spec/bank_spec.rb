@@ -7,7 +7,7 @@ RSpec.describe Bank, vcr: { cassette_name: 'bank_spec', :record => :new_episodes
   attr_accessor :bank
   before do
     @bank = Zengin.banks.find do |bank|
-              bank.name == "アイオー信用金庫"
+              bank.bank_name == "アイオー信用金庫"
             end
     binding.pry
   end
@@ -25,7 +25,7 @@ RSpec.describe Bank, vcr: { cassette_name: 'bank_spec', :record => :new_episodes
         attr_accessor :branch
         before do
           @branch = bank.branches.each.find do |branch|
-                      branch.name == '池尻大橋支店'
+                      branch.branch_name == '池尻大橋支店'
                     end
         end
 

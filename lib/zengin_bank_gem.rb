@@ -35,7 +35,6 @@ module Zengin
         end
       end
     end
-
   end
 
   def banks
@@ -56,22 +55,20 @@ module Zengin
                     '支店コード',
                     ]
     end
-    binding.pry
 
-    VCR.use_cassette("access_all", :record => :new_episodes) do
+    CSV.open("#{file_name}.csv", "a") do |csv|
       banks.each do |bank|
         bank.branches.each do |branch|
-          CSV.open("#{file_name}.csv", "a") do |csv|
-            csv << [
-                    branch.bank_name,
-                    bank.bank_yomi,
-                    branch.bank_code,
-                    branch.branch_name,
-                    branch.branch_yomi,
-                    branch.branch_code,
-                    ]
-          end
+          csv << [
+                  branch.bank_name,
+                  bank.bank_yomi,
+                  branch.bank_code,
+                  branch.branch_name,
+                  branch.branch_yomi,
+                  branch.branch_code,
+                  ]
         end
+        p "finish #{bank.bank_name}"
       end
     end
   end
