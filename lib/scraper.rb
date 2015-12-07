@@ -21,8 +21,7 @@ class Scraper
     banks_list_pages = []
     bank_form.buttons.map do |initial_kana_button|
       name, value = [initial_kana_button.name, initial_kana_button.value]
-      bank_form.add_field! name unless @bank_form.has_field?(name)
-      bank_form.field_with(name: name).value = value
+      bank_form.add_field!(name, value) unless @bank_form.has_field?(name)
       banks_list_pages << begin
                             bank_form.submit
                           rescue Exception => e
