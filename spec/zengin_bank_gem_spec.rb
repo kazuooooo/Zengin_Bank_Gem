@@ -11,14 +11,14 @@ RSpec.describe Zengin, vcr: { cassette_name: 'zengin_spec', :record => :new_epis
   describe 'test for debug' do
     it 'put all banks' do
       banks.each do |bank|
-        p bank.name
+        p bank.bank_name
       end
     end
 
     it 'put all branches in a bank' do
-      bank = banks.each.find {|bank| bank.name == "みなと銀行"}
+      bank = banks.each.find {|bank| bank.bank_name == "みなと銀行"}
       bank.branches.each do |branch|
-        puts branch.name
+        puts branch.branch_name
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe Zengin, vcr: { cassette_name: 'zengin_spec', :record => :new_epis
           bank.branches.each do |branch|
             p branch.name
           end
-      end
+        end
     end
   end
 

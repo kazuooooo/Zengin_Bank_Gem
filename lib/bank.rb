@@ -1,22 +1,22 @@
 class Bank
   
-  attr_accessor :bank_code, :name, :yomi, :branch_kana_page
-  def initialize(code, name, yomi, branch_kana_page)
-    @bank_code = code
-    @name = name
-    @yomi = yomi
+  attr_accessor :bank_code, :bank_name, :bank_yomi, :branch_kana_page
+  def initialize(bank_code, bank_name, bank_yomi, branch_kana_page)
+    @bank_code = bank_code
+    @bank_name = bank_name
+    @bank_yomi = bank_yomi
     @branch_kana_page = branch_kana_page
   end
 
   class Branch
     
-    attr_accessor :bank_name, :bank_code, :branch_code, :name, :yomi
-    def initialize(bank_name, bank_code, branch_code, name, yomi)
+    attr_accessor :bank_name, :bank_code, :branch_code, :branch_name, :branch_yomi
+    def initialize(bank_name, bank_code, branch_code, branch_name, branch_yomi)
       @bank_name = bank_name
       @bank_code = bank_code
       @branch_code = branch_code
-      @name = name
-      @yomi = yomi
+      @branch_name = branch_name
+      @branch_yomi = branch_yomi
     end
 
   end
@@ -53,7 +53,7 @@ class Bank
   end
 
   def branches
-    BranchCollection.new(bank_code, name, branch_kana_page)
+    BranchCollection.new(bank_code, bank_name, branch_kana_page)
   end
 
 end
