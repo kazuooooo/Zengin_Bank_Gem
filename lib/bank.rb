@@ -34,7 +34,6 @@ class Bank
 
     def each
       return self unless block_given?
-      # 毎回newする必要ない
       scraper.get_branch_list_pages(branch_kana_page).each do |page|
         branches_page_html = Nokogiri::HTML(page.body)
         branches_page_html.css('table.tbl1 tr:not(:first-child)').each_with_index do |tr, index|

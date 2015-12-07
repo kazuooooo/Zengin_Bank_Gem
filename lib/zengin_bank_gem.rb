@@ -3,9 +3,7 @@ require 'nokogiri'
 require 'mechanize'
 require 'pry'
 require 'scraper'
-require 'bank_scraper'
 require 'bank'
-require 'branch_scraper.rb'
 require 'csv'
 require 'vcr'
 
@@ -14,14 +12,14 @@ module Zengin
   class BankCollection
     include Enumerable
 
-    attr_accessor :bank_scraper
+    attr_accessor :scraper
     def initialize
-      @bank_scraper = Scraper.instance
+      @scraper = Scraper.instance
     end
 
     def each
       return self unless block_given?
-      bank_scraper.get_banks_list_pages.each do |page|
+      scraper.get_banks_list_pages.each do |page|
         # name, yomi, code = '', '', ''
         page_html = Nokogiri::HTML(page.body)
         page_html.css('table.tbl1 tr:not(:first-child)').each_with_index do |tr, index|
