@@ -16,7 +16,7 @@ $ bundle
 
 Or install it yourself as:
 ```
-$ gem install zengin-ruby
+$ gem install zengin_bank_gem
 ```
 
 ### Usage
