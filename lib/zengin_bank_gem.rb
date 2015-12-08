@@ -54,8 +54,8 @@ module Zengin
                     ]
     end
 
-    CSV.open("#{file_name}.csv", "a") do |csv|
-      banks.each do |bank|
+    banks.each do |bank|
+      CSV.open("#{file_name}.csv", "a") do |csv|
         bank.branches.each do |branch|
           csv << [
                   branch.bank_name,

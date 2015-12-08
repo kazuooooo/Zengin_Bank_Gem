@@ -15,7 +15,6 @@ class Scraper
   end
 
 ### Bank
-### Bank
   def get_banks_list_pages
     bank_form.buttons.map do |initial_kana_button|
       name, value = [initial_kana_button.name, initial_kana_button.value]
