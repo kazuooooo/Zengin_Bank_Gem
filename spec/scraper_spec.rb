@@ -33,7 +33,6 @@ RSpec.describe Scraper do
             
             before do
               tbank = Zengin.banks.each.find do |bank|
-                        p bank.bank_name
                         bank.bank_name == "愛知県警察信用組合"
                       end
               @branch_pages = Scraper.instance.get_branch_list_pages(tbank.branch_kana_page)

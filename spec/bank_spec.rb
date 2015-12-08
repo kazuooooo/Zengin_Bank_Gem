@@ -24,7 +24,6 @@ RSpec.describe Bank do
         attr_accessor :branch
         before do
           @branch = @bank.branches.each.find do |branch|
-                      p branch.branch_name
                       branch.branch_name == '一宮支店'
                     end
         end
