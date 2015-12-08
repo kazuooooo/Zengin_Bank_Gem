@@ -1,4 +1,4 @@
-Zengin_Bank_Gem
+# Zengin_Bank_Gem
 
 Welcome, this is zengin-ruby gem. By using this gem, you can use Japanese banks information scraping from Zengin System (http://zengin.ajtw.net/)
 
