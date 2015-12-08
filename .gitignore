@@ -80,3 +80,11 @@ Temporary Items
 
 /lib/main.rb
 
+# csv
+*.csv
+
+
+
+
+
+
