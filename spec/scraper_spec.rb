@@ -32,9 +32,10 @@ RSpec.describe Scraper do
           describe '全てのかなページを取得出来ている' do
             
             before do
-              tbank = Zengin.banks.each.find do |bank|
-                        bank.bank_name == "愛知県警察信用組合"
-                      end
+              tbank = 
+                Zengin.banks.each.find do |bank|
+                  bank.bank_name == "愛知県警察信用組合"
+                end
               @branch_pages = Scraper.instance.get_branch_list_pages(tbank.branch_kana_page)
             end
 

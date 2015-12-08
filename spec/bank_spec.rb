@@ -6,9 +6,10 @@ RSpec.describe Bank do
 
   attr_accessor :bank
   before do
-    @bank = Zengin.banks.each.find do |bank|
-              bank.bank_name == "愛知銀行"
-            end
+    @bank = 
+      Zengin.banks.each.find do |bank|
+        bank.bank_name == "愛知銀行"
+      end
   end
 
   describe '#branches' do
@@ -23,9 +24,10 @@ RSpec.describe Bank do
         
         attr_accessor :branch
         before do
-          @branch = @bank.branches.each.find do |branch|
-                      branch.branch_name == '一宮支店'
-                    end
+          @branch =
+            @bank.branches.each.find do |branch|
+              branch.branch_name == '一宮支店'
+            end
         end
 
         it '支店コードは769になる' do
@@ -43,9 +45,10 @@ RSpec.describe Bank do
       context '愛知銀行の"ほ"の場合' do
         attr_accessor :branches
         before do
-          @branches = bank.branches.each.find_all do |branch|
-                        branch.branch_yomi[0, 1] == 'ﾎ'
-                      end
+          @branches = 
+            bank.branches.each.find_all do |branch|
+              branch.branch_yomi[0, 1] == 'ﾎ'
+            end
         end
 
         it '4つの支店がある' do

@@ -4,12 +4,12 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'zengin_bank_gem/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "zengin_ruby_gem"
+  spec.name          = "zengin_bank_gem"
   spec.version       = ZenginBankGem::VERSION
   spec.authors       = ["kazuya.matsumoto"]
   spec.email         = ["matsumotokazuya7@gmail.com"]
 
-  spec.summary       = %q{zengin ruby gem}
+  spec.summary       = %q{zengin bank gem}
   spec.description   = %q{gem for using bank and branches info scraped from Zengin System(http://zengin.ajtw.net/)}
   spec.homepage      = "https://github.com/kazuooooo/Zengin_Bank_Gem"
   spec.license       = "MIT"
