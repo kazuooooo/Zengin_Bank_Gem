@@ -1,84 +1,70 @@
-# zengin-ruby
+Zengin_Bank_Gem
 
-### zengin-ruby
-Welcome, this is zengin-ruby gem. By using this gem, you can use
-Japanese banks information scraping from Zengin System (http://zengin.ajtw.net/)
+Welcome, this is zengin-ruby gem. By using this gem, you can use Japanese banks information scraping from Zengin System (http://zengin.ajtw.net/)
 
-### Installation
+Installation
 
-Add this line to your application's Gemfile:
-```
-gem 'zengin'
-```
+Add this line to your application’s Gemfile:
 
+gem 'zengin_bank_gem'
 And then execute:
-```
+
 $ bundle
-```
-
 Or install it yourself as:
-```
+
 $ gem install zengin-ruby
-```
-### Usage
+Usage
 
-Include Zengin Module in Class.
-```ruby
-class SomeClass
-  include Zengin
+require Zengin Module in Class.
+
+require 'zengin_bank_gem'
+Then you can use Zengin.banks method, it return Enumerable BankCollection object. Bank object has bank_code, name and yomi properties.
+
+Zengin.banks 
+# => Return Enumerable BankCollection
+Moreover, Bank Object has branches method, it return Enumerable BranchCollection oject. Branch object has branch_code, name and yomi properties.
+
+Zengin.banks.each do |bank|
+  bank.branches
+  # => Enumerable BranchCollection
 end
-```
- 
-Then you can use ClassName.banks method, it return Enumerable BankCollection object.
-Bank object has bank_code, name and yomi properties.
-```ruby
-someclass.banks 
-# => Enumerable BankCollection
-```
- 
-Moreover, Bank Object has branches method, it return Enumerable BranchCollection oject.
-Branch object has branch_code, name and yomi properties.
-```ruby
-somebank.branches
-# => Enumerable BranchCollection
-```
-
 For more detail, please check sample below.
 
-### Sample
-```ruby
-require_relative 'zengin_bank_gem'
-class Sample
-  include Zengin # need to include Zengin Module
-end
+Sample
 
-sample = Sample.new
+require 'zengin_bank_gem'
 
 # put all banks properties
-sample.banks.each do |bank|
+Zengin.banks.each do |bank|
   puts bank.bank_code
-  puts bank.name
-  puts bank.yomi
+  puts bank.bank_name
+  puts bank.bank_yomi
 end
 
 # you can use Enumerable Methods on banks(ex: find method)
-somebank = sample.banks.each.find do |bank|
+somebank = Zengin.banks.each.find do |bank|
               bank.name == "○○銀行"
            end
 
-# puts somebank's all branches properties
+# puts somebank's branches properties
 somebank.branches.each do |branch|
   puts branch.branch_code
-  puts branch.name
-  puts branch.yomi
+  puts branch.bramch_name
+  puts branch.branch_yomi
 end
 
 # Enumerable Methods can use on branches(ex: count)
 p somebank.branches.each.count
-```
-### Development
+Development
 
-### Contributing
+After checking out the repo, run bin/setup to install dependencies. Then, run rake spec to run the tests. You can also run bin/console for an interactive prompt that will allow you to experiment.
 
-### Licence
+To install this gem onto your local machine, run bundle exec rake install. To release a new version, update the version number in version.rb, and then run bundle exec rake release, which will create a git tag for the version, push git commits and tags, and push the .gem file to rubygems.org.
+
+Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/Zengin_Bank_Gem. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
+
+Licence
+
 The gem is available as open source under the terms of the MIT License.
