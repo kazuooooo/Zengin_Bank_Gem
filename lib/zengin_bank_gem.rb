@@ -9,9 +9,56 @@ require 'vcr'
 
 module Zengin
 
+  # EnumerableなBankCollectionを返す
+  # @return [BankCollection] BankCollection
+  # @example
+  #  Zengin.banks => [BankCollection] 
+  def banks
+    BankCollection.new
+  end
+  module_function 
+
+  # 全金融機関、支店のデータをcsvファイルに出力する
+  # @param [String] file_name ファイル名(拡張子には自動でcsvが付与される)
+  # @return [nil]
+  def mk_csv_file(file_name)
+    #拡張子がついてたら削除
+    fixed_file_name = file_name.gsub(/\..*/, "")
+    
+    # ヘッダー追加
+    CSV.open("#{fixed_file_name}.csv", "w") do |csv|
+            csv << [
+              '金融機関名',
+              'フリガナ',
+              '金融機関コード',
+              '支店名',
+              'フリガナ',
+              '支店コード',
+            ]
+    end
+
+    banks.each do |bank|
+      CSV.open("#{fixed_file_name}.csv", "a") do |csv|
+        bank.branches.each do |branch|
+          csv << [
+            branch.bank_name,
+            bank.bank_yomi,
+            branch.bank_code,
+            branch.branch_name,
+            branch.branch_yomi,
+            branch.branch_code,
+          ]
+        end
+      end
+    end
+  end
+  module_function :banks, :mk_csv_file
+
   class BankCollection
     include Enumerable
 
+    # @!attribute scraper
+    #   @return [Scraper] Scraperインスタンス
     attr_accessor :scraper
     def initialize
       @scraper = Scraper.instance
@@ -20,7 +67,6 @@ module Zengin
     def each
       return self unless block_given?
       scraper.get_banks_list_pages.each do |page|
-        # name, yomi, code = '', '', ''
         page_html = Nokogiri::HTML(page.body)
         page_html.css('table.tbl1 tr:not(:first-child)').each_with_index do |tr, index|
           bank_name, bank_yomi, bank_code = tr.css('td.g1, td.g2').map{ |td| td.text }
@@ -34,43 +80,5 @@ module Zengin
       end
     end
   end
-
-  def banks
-    BankCollection.new
-  end
-
-  module_function :banks
-
-  def mk_csv_file(file_name)
-    # ヘッダー追加
-    CSV.open("#{file_name}.csv", "w") do |csv|
-            csv << [
-                    '金融機関名',
-                    'フリガナ',
-                    '金融機関コード',
-                    '支店名',
-                    'フリガナ',
-                    '支店コード',
-                    ]
-    end
-
-    banks.each do |bank|
-      CSV.open("#{file_name}.csv", "a") do |csv|
-        bank.branches.each do |branch|
-          csv << [
-                  branch.bank_name,
-                  bank.bank_yomi,
-                  branch.bank_code,
-                  branch.branch_name,
-                  branch.branch_yomi,
-                  branch.branch_code,
-                  ]
-        end
-        p "finish #{bank.bank_name}"
-      end
-    end
-  end
-
-  module_function :mk_csv_file
 
 end

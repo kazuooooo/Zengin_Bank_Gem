@@ -52,11 +52,9 @@ RSpec.describe Zengin, vcr: { cassette_name: 'zengin_spec', :record => :new_epis
     end
   end
 
-  # describe 'csv出力' do
-  #   it 'csv全件出力される' do
-  #     VCR.use_cassette("mk_csv", :record => :new_episodes) do
-  #       Zengin.mk_csv_file('zengin_test')
-  #     end
-  #   end
-  # end
+  describe 'csv出力' do
+    it 'csv全件出力される' do
+      Zengin.mk_csv_file('zengin_test2')
+    end
+  end
 end

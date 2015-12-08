@@ -1,5 +1,12 @@
 class Bank
-  
+  # @!attribute bank_code
+  #   @return [Int] 金融機関コード
+  # @!attribute bank_name
+  #   @return [String] 金融機関名
+  # @!attribute bank_yomi
+  #   @return [String] 金融機関のフリガナ
+  # @!attribute branch_kana_page
+  #   @return [Mechanize::Page] 支店のかな一覧ページ
   attr_accessor :bank_code, :bank_name, :bank_yomi, :branch_kana_page
   def initialize(bank_code, bank_name, bank_yomi, branch_kana_page)
     @bank_code = bank_code
@@ -8,8 +15,25 @@ class Bank
     @branch_kana_page = branch_kana_page
   end
 
+  # EnumerableなBranchCollectionを返す
+  # @return [BankCollection] BankCollection
+  # @example
+  #   Zengin.banks => [BankCollection] 
+  def branches
+    BranchCollection.new(bank_code, bank_name, branch_kana_page)
+  end
+
   class Branch
-    
+    # @!attribute bank_code
+    #   @return [Int] 金融機関コード
+    # @!attribute bank_name
+    #   @return [String] 金融機関名
+    # @!attribute branch_code
+    #   @return [Int] 支店コード
+    # @!attribute branch_name
+    #   @return [String] 支店名
+    # @!attribute branch_yomi
+    #   @return [String] 支店のフリガナ
     attr_accessor :bank_name, :bank_code, :branch_code, :branch_name, :branch_yomi
     def initialize(bank_name, bank_code, branch_code, branch_name, branch_yomi)
       @bank_name = bank_name
@@ -23,7 +47,14 @@ class Bank
 
   class BranchCollection
     include Enumerable
-
+    # @!attribute bank_code
+    #   @return [Int] 金融機関コード
+    # @!attribute bank_name
+    #   @return [String] 金融機関名
+    # @!attribute branch_kana_page
+    #   @return [Mechanize::Page] 支店のかな一覧ページ
+    # @!attribute scraper
+    #   @return [Scraper] Scraperインスタンス
     attr_accessor :bank_code, :bank_name, :branch_kana_page, :scraper
     def initialize(bank_code, bank_name, branch_kana_page)
       @bank_code = bank_code
@@ -44,15 +75,6 @@ class Bank
         end
       end
     end
-    
-    def no_branch?(page)
-      text = page.search('table.tbl1 tr td.g1:first-child').inner_text
-      text == '該当するデータはありません'
-    end
-  end
-
-  def branches
-    BranchCollection.new(bank_code, bank_name, branch_kana_page)
   end
 
 end

@@ -2,7 +2,14 @@ require 'singleton'
 
 class Scraper
   include Singleton
-
+  # @!attribute agent
+  #   @return [Mechanize] Mechanizeクライアント
+  # @!attribute bank_kana_page
+  #   @return [Mechanize::Page] 銀行のかな一覧ページ
+  # @!attribute banks_list_pages
+  #   @return [Mechanize::Page] 各かなの銀行一覧ページ
+  # @!attribute bank_form
+  #   @return [Mechanize::Form] 各かなボタンが含まれたフォーム
   attr_accessor :agent, :bank_kana_page, :banks_list_pages, :bank_form
   def initialize
     @agent = Mechanize.new
@@ -11,10 +18,11 @@ class Scraper
     @bank_form = bank_kana_page.form_with(action: /ginkou.php/)
     agent.log = Logger.new $stderr
     agent.keep_alive = false
-    # agent.read_timeout = 180
   end
 
 ### Bank
+  # 各かなの金融機関一覧ページを取得
+  # @return [Mechanize::Page[]] 各かなの金融機関一覧ページ
   def get_banks_list_pages
     bank_form.buttons.map do |initial_kana_button|
       name, value = [initial_kana_button.name, initial_kana_button.value]
@@ -30,11 +38,13 @@ class Scraper
   end
 
 ### Branch
+  # 引数で与えられた銀行のページから各かなの支店一覧ページを取得
+  # @return [Mechanize::Page[]] 各かなの支店一覧ページ
   def get_branch_list_pages(branch_kana_page)
+    raise 'ARGMENT MUST BE Mechanize::Page!!' unless branch_kana_page.is_a?(Mechanize::Page)
     branch_form = branch_kana_page.form_with(action: /shitenmeisai.php/)
     branch_form.buttons.map do |initial_kana_button|
       name, value = [initial_kana_button.name, initial_kana_button.value]
-      #かな
       branch_form.delete_field!(name)
       branch_form.add_field!(name, value)
       begin
