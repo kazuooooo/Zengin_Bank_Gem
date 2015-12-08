@@ -19,10 +19,10 @@
 build/
 
 ## Documentation cache and generated files:
-/lib/.yardoc/
-/lib/_yardoc/
-/lib/doc/
-/lib/rdoc/
+.yardoc/
+_yardoc/
+doc/
+rdoc/
 
 ## Environment normalisation:
 /.bundle/
@@ -66,6 +66,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# vrc
+/spec/cassettes
 
 ### Linux ###
 *~
@@ -78,3 +80,5 @@ Temporary Items
 
 /lib/main.rb
 
+# csv
+*.csv

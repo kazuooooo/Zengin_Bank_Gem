@@ -1,56 +1,80 @@
-require_relative '../lib/branch_scraper.rb'
-
 class Bank
-  
-  attr_accessor :bank_code, :name, :yomi
-  def initialize(code, name, yomi)
-    @bank_code = code
-    @name = name
-    @yomi = yomi
+  # @!attribute bank_code
+  #   @return [Int] 金融機関コード
+  # @!attribute bank_name
+  #   @return [String] 金融機関名
+  # @!attribute bank_yomi
+  #   @return [String] 金融機関のフリガナ
+  # @!attribute branch_kana_page
+  #   @return [Mechanize::Page] 支店のかな一覧ページ
+  attr_accessor :bank_code, :bank_name, :bank_yomi, :branch_kana_page
+  def initialize(bank_code, bank_name, bank_yomi, branch_kana_page)
+    @bank_code = bank_code
+    @bank_name = bank_name
+    @bank_yomi = bank_yomi
+    @branch_kana_page = branch_kana_page
+  end
+
+  # EnumerableなBranchCollectionを返す
+  # @return [BankCollection] BankCollection
+  # @example
+  #   Zengin.banks => [BankCollection] 
+  def branches
+    BranchCollection.new(bank_code, bank_name, branch_kana_page)
   end
 
   class Branch
-    
-    attr_accessor :branch_code, :name, :yomi
-    def initialize(code, name, yomi)
-      @branch_code = code
-      @name = name
-      @yomi = yomi
+    # @!attribute bank_code
+    #   @return [Int] 金融機関コード
+    # @!attribute bank_name
+    #   @return [String] 金融機関名
+    # @!attribute branch_code
+    #   @return [Int] 支店コード
+    # @!attribute branch_name
+    #   @return [String] 支店名
+    # @!attribute branch_yomi
+    #   @return [String] 支店のフリガナ
+    attr_accessor :bank_name, :bank_code, :branch_code, :branch_name, :branch_yomi
+    def initialize(bank_name, bank_code, branch_code, branch_name, branch_yomi)
+      @bank_name = bank_name
+      @bank_code = bank_code
+      @branch_code = branch_code
+      @branch_name = branch_name
+      @branch_yomi = branch_yomi
     end
 
   end
 
   class BranchCollection
     include Enumerable
-
-    attr_accessor :bank_code
-    def initialize(code)
-      @bank_code = code
+    # @!attribute bank_code
+    #   @return [Int] 金融機関コード
+    # @!attribute bank_name
+    #   @return [String] 金融機関名
+    # @!attribute branch_kana_page
+    #   @return [Mechanize::Page] 支店のかな一覧ページ
+    # @!attribute scraper
+    #   @return [Scraper] Scraperインスタンス
+    attr_accessor :bank_code, :bank_name, :branch_kana_page, :scraper
+    def initialize(bank_code, bank_name, branch_kana_page)
+      @bank_code = bank_code
+      @bank_name = bank_name
+      @branch_kana_page = branch_kana_page
+      @scraper = Scraper.instance
     end
 
     def each
       return self unless block_given?
-      branch_scraper = BranchScraper.new
-      branch_scraper.search_bank(bank_code)
-      branch_scraper.get_branch_list_pages.each do |page|
-        tablerows = page.search('table.tbl1 tr')
-        tablerows.shift
-        tablerows.each do |tr|
-          name = tr.css('td.g1:first-child').inner_text
-          if name == '該当するデータはありません'
-            next
-          end
-          yomi = tr.css('td.g1:nth-child(2)').inner_text
-          branch_code = tr.css('td.g2').inner_text
-          branch = Branch.new(branch_code, name, yomi)
+      scraper.get_branch_list_pages(branch_kana_page).each do |page|
+        branches_page_html = Nokogiri::HTML(page.body)
+        branches_page_html.css('table.tbl1 tr:not(:first-child)').each_with_index do |tr, index|
+          branch_name, branch_yomi, branch_code = tr.css('td.g1, td.g2').map{ |td| td.text }
+          next unless branch_name && branch_yomi && branch_code
+          branch = Branch.new(bank_name, bank_code, branch_code, branch_name, branch_yomi)
           yield branch
         end
       end
     end
-  end
-
-  def branches
-    BranchCollection.new(bank_code)
   end
 
 end
