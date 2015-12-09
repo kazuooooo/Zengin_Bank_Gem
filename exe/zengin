@@ -5,7 +5,7 @@ require 'zengin_bank_gem'
 require 'thor'
 
 class CommandLine < Thor # Thorを継承
-  desc "mk_csv file_name", "make csv file named '#{file_name}.csv'"
+  desc "mk_csv file_name", "make csv file named 'file_name.csv'"
   def mk_csv(file_name = "zengin_csv")
     ZenginBankGem.mk_csv_file(file_name)
   end
