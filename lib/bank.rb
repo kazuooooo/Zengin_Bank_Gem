@@ -1,4 +1,4 @@
-module Zengin
+module ZenginBankGem
 
   class Bank
     # @!attribute bank_code

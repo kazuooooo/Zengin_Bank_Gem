@@ -1,5 +1,6 @@
 require 'singleton'
-module Zengin
+module ZenginBankGem
+
   class Scraper
     include Singleton
     # @!attribute agent
@@ -56,4 +57,5 @@ module Zengin
       end
     end
   end
+  
 end

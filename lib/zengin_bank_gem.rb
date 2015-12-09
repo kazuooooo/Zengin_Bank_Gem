@@ -7,7 +7,7 @@ require 'bank'
 require 'csv'
 require 'vcr'
 
-module Zengin
+module ZenginBankGem
 
   # EnumerableなBankCollectionを返す
   # @return [BankCollection] BankCollection
