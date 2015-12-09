@@ -108,6 +108,7 @@ DEPENDENCIES
   guard-rspec
   rake (~> 10.0)
   rspec
+  thor
   vcr
   webmock
   zengin_bank_gem!
