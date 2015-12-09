@@ -17,8 +17,6 @@ module ZenginBankGem
       @bank_kana_page = agent.get('http://zengin.ajtw.net/')
       @banks_list_pages = []
       @bank_form = bank_kana_page.form_with(action: /ginkou.php/)
-      #agent.log = Logger.new $stderr
-      agent.keep_alive = false
     end
 
   ### Bank
