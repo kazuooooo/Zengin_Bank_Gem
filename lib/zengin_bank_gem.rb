@@ -17,10 +17,6 @@ module ZenginBankGem
     BankCollection.new
   end
 
-  def hi
-    puts "hi"
-  end
-  module_function :hi
   # 全金融機関、支店のデータをcsvファイルに出力する
   # @param [String] file_name ファイル名(拡張子には自動でcsvが付与される)
   # @return [nil]
