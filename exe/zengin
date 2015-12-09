@@ -1,8 +1,10 @@
-require "bundler/setup"
-require "zengin_bank_gem"
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'zengin_bank_gem'
 require 'thor'
 
-class CommandLine < Thor
+class CommandLine < Thor # Thorを継承
   desc "mk_csv file_name", "make csv file named '#{file_name}.csv'"
   def mk_csv(file_name = "zengin_csv")
     ZenginBankGem.mk_csv_file(file_name)
