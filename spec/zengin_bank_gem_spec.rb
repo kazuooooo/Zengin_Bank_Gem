@@ -56,7 +56,7 @@ RSpec.describe ZenginBankGem, vcr: { cassette_name: 'zengin_spec', :record => :n
 
   VCR.use_cassette("mk_csv", :record => :new_episodes) do
     describe 'csv出力' do
-      it 'csv全件出力される' do
+      it 'csv全件出力される', full_dump: true do
         expect(ZenginBankGem.mk_csv_file('zengin_test2')).not_to be_empty
       end
     end
