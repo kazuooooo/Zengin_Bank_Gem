@@ -2,20 +2,20 @@ require 'vcr'
 require_relative './spec_helper'
 
 
-RSpec.describe Zengin, vcr: { cassette_name: 'zengin_spec', :record => :new_episodes } do
+RSpec.describe ZenginBankGem, vcr: { cassette_name: 'zengin_spec', :record => :new_episodes } do
 
   attr_accessor :banks
   before do
-    @banks = Zengin.banks
+    @banks = ZenginBankGem.banks
   end
 
   describe '#banks' do
-    it 'banksを呼んだ時にBankCollectionが返る' do
-      expect(Zengin.banks).to be_kind_of(Zengin::BankCollection)
+    it 'banksを呼んだ時にZenginBankGem::BankCollectionが返る' do
+      expect(ZenginBankGem.banks).to be_kind_of(ZenginBankGem::BankCollection)
     end
   end
 
-  describe Zengin::BankCollection do
+  describe ZenginBankGem::BankCollection do
     describe 'ある取得した銀行の名前とコードが正しく取得出来ている' do
       context '松本信用金庫の場合' do
         it 'コードは1391になる' do
@@ -57,7 +57,7 @@ RSpec.describe Zengin, vcr: { cassette_name: 'zengin_spec', :record => :new_epis
   VCR.use_cassette("mk_csv", :record => :new_episodes) do
     describe 'csv出力' do
       it 'csv全件出力される' do
-        expect(Zengin.mk_csv_file('zengin_test2')).not_to be_empty
+        expect(ZenginBankGem.mk_csv_file('zengin_test2')).not_to be_empty
       end
     end
   end

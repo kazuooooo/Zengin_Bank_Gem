@@ -2,23 +2,23 @@ require 'vcr'
 require_relative 'spec_helper'
 require_relative '../lib/bank'
 
-RSpec.describe Bank do
+RSpec.describe ZenginBankGem::Bank do
 
   attr_accessor :bank
   before do
     @bank = 
-      Zengin.banks.each.find do |bank|
+      ZenginBankGem.banks.each.find do |bank|
         bank.bank_name == "愛知銀行"
       end
   end
 
   describe '#branches' do
-    it 'branchesを呼んだ時にBranchCollectionが返る' do
-      expect(bank.branches).to be_kind_of(Bank::BranchCollection)
+    it 'branchesを呼んだ時にZenginBankGem::Bank::BranchCollectionが返る' do
+      expect(bank.branches).to be_kind_of(ZenginBankGem::Bank::BranchCollection)
     end
   end
 
-  describe Bank::BranchCollection do
+  describe ZenginBankGem::Bank::BranchCollection do
     describe 'ある取得した支店の名前とコードが正しく取得出来ている' do
       context '愛知銀行一宮支店の場合' do
         

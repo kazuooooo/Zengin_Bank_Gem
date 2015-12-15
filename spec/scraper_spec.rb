@@ -1,14 +1,14 @@
 require_relative 'spec_helper'
 require 'vcr'
 
-RSpec.describe Scraper do
+RSpec.describe ZenginBankGem::Scraper do
 
     VCR.use_cassette("scraper_spec", :record => :new_episodes) do
       describe '#get_banks_list_pages' do
         describe '全ての銀行かなページを取得出来ている' do
           
           before do
-            @bank_pages = Scraper.instance.get_banks_list_pages
+            @bank_pages = ZenginBankGem::Scraper.instance.get_banks_list_pages
           end
 
           it 'Pageオブジェクトが返っている' do
@@ -33,10 +33,10 @@ RSpec.describe Scraper do
             
             before do
               tbank = 
-                Zengin.banks.each.find do |bank|
+                ZenginBankGem.banks.each.find do |bank|
                   bank.bank_name == "愛知県警察信用組合"
                 end
-              @branch_pages = Scraper.instance.get_branch_list_pages(tbank.branch_kana_page)
+              @branch_pages = ZenginBankGem::Scraper.instance.get_branch_list_pages(tbank.branch_kana_page)
             end
 
             it 'Pageオブジェクトが返っている' do
